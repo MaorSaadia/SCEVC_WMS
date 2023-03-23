@@ -1,5 +1,5 @@
 import React from 'react';
-//import { LinkContainer } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const Header = () => {
@@ -10,21 +10,30 @@ const Header = () => {
         collapseOnSelect
       >
         <Container>
-          <Navbar.Brand href="/">
-            <img
-              alt=""
-              src="/SCE.png"
-              width="60"
-              height="60"
-              className="d-inline-block align-top"
-            />{' '}
-          </Navbar.Brand>
+          <LinkContainer to="/">
+            <Navbar.Brand>
+              <img
+                alt=""
+                src="/SCE.png"
+                width="60"
+                height="60"
+                className="d-inline-block align-top"
+              />
+            </Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link href="/login">
-                <i className="fas fa-user"></i> Sign In
-              </Nav.Link>
+              {/* <LinkContainer to="/conntact">
+                <Nav.Link>
+                  צור קשר <i className="fas fa-phone"></i>
+                </Nav.Link>
+              </LinkContainer> */}
+              <LinkContainer to="/login">
+                <Nav.Link>
+                  התחברות <i className="fas fa-user"></i>
+                </Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
