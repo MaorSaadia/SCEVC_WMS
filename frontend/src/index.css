@@ -1,0 +1,7 @@
+main {
+  min-height: 85vh;
+}
+
+.navbar {
+  height: 10vh; /*i assume your navbar size 100px*/
+}
