@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -12,22 +12,12 @@ import {
 import FormContainer from '../components/FormContainer';
 
 const RegisterScreen = () => {
-  const [name, setName] = useState('');
+  const [pname, setPname] = useState('');
+  const [lname, setLname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
-
-  let navigate = useNavigate();
-
-  const { location } = useLocation();
-  const redirect = location ? location.split('=')[1] : '/';
-
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate(redirect);
-  //   }
-  // }, [userInfo, redirect, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -40,29 +30,44 @@ const RegisterScreen = () => {
   return (
     <>
       <FormContainer>
-        <hr></hr>
-        <h1>Sign Up</h1>
-        <hr></hr>
+        <hr className="hr-line-right"></hr>
+        <h1>הרשמה</h1>
+        <hr className="hr-line-left"></hr>
+        <div>
+          <h1> </h1>
+        </div>
         <Form onSubmit={submitHandler}>
-          <FormGroup controlId="name">
-            <FormLabel>
-              <strong>Name:</strong>
+          <FormGroup controlId="pname">
+            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <strong>:שם פרטי</strong>
             </FormLabel>
             <FormControl
+              style={{ direction: 'rtl' }}
               type="name"
-              placeholder="Enter name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={pname}
+              onChange={(e) => setPname(e.target.value)}
+            ></FormControl>
+          </FormGroup>
+          <h5> </h5>
+          <FormGroup controlId="lname">
+            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <strong>:שם משפחה</strong>
+            </FormLabel>
+            <FormControl
+              style={{ direction: 'rtl' }}
+              type="lname"
+              value={lname}
+              onChange={(e) => setLname(e.target.value)}
             ></FormControl>
           </FormGroup>
           <h5> </h5>
           <FormGroup controlId="email">
-            <FormLabel>
-              <strong>Email Address:</strong>
+            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <strong>:אימייל מכללה</strong>
             </FormLabel>
             <FormControl
+              style={{ direction: 'rtl' }}
               type="email"
-              placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             ></FormControl>
@@ -70,12 +75,12 @@ const RegisterScreen = () => {
           <h5> </h5>
 
           <FormGroup controlId="password">
-            <FormLabel>
-              <strong>Password:</strong>
+            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <strong>:סיסמא</strong>
             </FormLabel>
             <FormControl
+              style={{ direction: 'rtl' }}
               type="password"
-              placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></FormControl>
@@ -83,12 +88,12 @@ const RegisterScreen = () => {
           <h5> </h5>
 
           <FormGroup controlId="confirmPassword">
-            <FormLabel>
-              <strong>Confirm Password:</strong>
+            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <strong>:אמת סיסמא</strong>
             </FormLabel>
             <FormControl
+              style={{ direction: 'rtl' }}
               type="password"
-              placeholder="Confirm Password"
               value={confirmpassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></FormControl>
@@ -99,13 +104,17 @@ const RegisterScreen = () => {
           </div>
           <div className="d-grid gap-3">
             <Button type="submit" variant="primary">
-              Register
+              הירשם
             </Button>
           </div>
         </Form>
+        <h2> </h2>
         <Row className="py-3">
-          <Col>
-            Already Have an Account? <Link to={'/login'}>Login</Link>
+          <Col className="text-center">
+            <strong>רשום למערכת?</strong>{' '}
+            <Link to={'/login'}>
+              <strong>התחבר </strong>
+            </Link>
           </Col>
         </Row>
       </FormContainer>

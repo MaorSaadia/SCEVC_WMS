@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -15,40 +15,27 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  //let navigate = useNavigate();
-
-  const { search } = useLocation();
-  const redirect = search ? search.split('=')[1] : '/';
-
-  // console.log(redirect);
-
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate(redirect);
-  //   }
-  // }, [userInfo, redirect]);
-
   const submitHandler = (e) => {
     console.log('OK');
   };
 
   return (
     <>
-      {/* <Meta title={'Travel+ | Login'} /> */}
       <FormContainer>
-        <hr></hr>
+        <hr className="hr-line-right"></hr>
         <h1>התחברות</h1>
-        <hr></hr>
+        <hr className="hr-line-left"></hr>
         <div>
           <h1> </h1>
           <h1> </h1>
         </div>
         <Form onSubmit={submitHandler}>
           <FormGroup controlId="email">
-            <FormLabel className="text-center" style={{ width: '100%' }}>
-              <strong>אימייל</strong>
+            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <strong>:אימייל</strong>
             </FormLabel>
             <FormControl
+              style={{ direction: 'rtl' }}
               type="email"
               placeholder=""
               value={email}
@@ -57,10 +44,11 @@ const LoginScreen = () => {
           </FormGroup>
           <h5> </h5>
           <FormGroup controlId="password">
-            <FormLabel className="text-center" style={{ width: '100%' }}>
-              <strong>סיסמא</strong>
+            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <strong>:סיסמא</strong>
             </FormLabel>
             <FormControl
+              style={{ direction: 'rtl' }}
               type="password"
               placeholder=""
               value={password}
@@ -79,10 +67,9 @@ const LoginScreen = () => {
         <h2> </h2>
         <Row className="py-3">
           <Col className="text-center">
-            <strong>עדיין אין לך חשבון?</strong>
+            <strong>עדיין לא רשום למערכת?</strong>{' '}
             <Link to={'/register'}>
-              {' '}
-              <strong> הירשם </strong>
+              <strong>הירשם </strong>
             </Link>
           </Col>
         </Row>
