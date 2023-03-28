@@ -12,19 +12,43 @@ import {
 import FormContainer from '../components/FormContainer';
 
 const RegisterScreen = () => {
-  const [pname, setPname] = useState('');
-  const [lname, setLname] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+    //console.log(name, email, password, confirmpassword, message);
 
     if (password !== confirmpassword) {
       setMessage('Passwords Do Not Match');
     }
+
+    // try {
+    //   const response = await fetch('/api/auth/register', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ name, email, password }),
+    //   });
+
+    //   const data = await response.json();
+
+    //   if (!response.ok) {
+    //     setMessage(data.message);
+    //     return;
+    //   }
+
+    //   localStorage.setItem('token', data.token);
+    //   setName('');
+    //   setEmail('');
+    //   setPassword('');
+    //   setMessage('');
+    // } catch (message) {
+    //   console.error(message);
+    //   setMessage('Server error');
+    // }
   };
 
   return (
@@ -36,28 +60,17 @@ const RegisterScreen = () => {
         <div>
           <h1> </h1>
         </div>
+        {message && <p>{message}</p>}
         <Form onSubmit={submitHandler}>
           <FormGroup controlId="pname">
             <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <strong>:שם פרטי</strong>
+              <strong>:שם מלא</strong>
             </FormLabel>
             <FormControl
               style={{ direction: 'rtl' }}
               type="name"
-              value={pname}
-              onChange={(e) => setPname(e.target.value)}
-            ></FormControl>
-          </FormGroup>
-          <h5> </h5>
-          <FormGroup controlId="lname">
-            <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <strong>:שם משפחה</strong>
-            </FormLabel>
-            <FormControl
-              style={{ direction: 'rtl' }}
-              type="lname"
-              value={lname}
-              onChange={(e) => setLname(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             ></FormControl>
           </FormGroup>
           <h5> </h5>

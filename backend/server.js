@@ -1,21 +1,40 @@
 import express from 'express';
 import dotenv from 'dotenv';
-
-import connectDB from './config/db.js';
+import cors from 'cors';
+//import connectDB from './config/db.js';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
-connectDB();
-
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+app.use(cors());
+app.use(express.json());
+
+// app.get('/', (req, res) => {
+//   res.send('API is running...');
+// });
+
+//connectDB();
 
 const PORT = process.env.PORT || 5000;
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(
+      PORT,
+      console.log(
+        `server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+      )
+    );
+    console.log(`MongoDB Connected`);
+  })
 
-app.listen(
-  PORT,
-  console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
-);
+  .catch((err) => {
+    console.log(err);
+  });
+
+// app.listen(
+//   PORT,
+//   console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+// );
