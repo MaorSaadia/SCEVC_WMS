@@ -1,22 +1,19 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-//import connectDB from './config/db.js';
-import mongoose from 'mongoose';
-
-//const userRoutes = require('./routes/userRoutes');
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+//const cors = require('cors');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
 const app = express();
-//app.use(userRoutes);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use(cors());
-// app.use(express.json());
+app.use('/api/users', userRoutes);
 
-// app.get('/', (req, res) => {
-//   res.send('API is running...');
-// });
+//app.use(cors());
 
 //connectDB();
 

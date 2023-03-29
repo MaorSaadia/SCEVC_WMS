@@ -1,59 +1,20 @@
-import express from 'express';
-//import AsyncHandler from 'expressAsyncHandler';
-import jwt from 'jsonwebtoken';
-import User from '../models/userModel';
+const User = require('../models/userModel');
+const express = require('express');
+const bodyParser = require('body-parser');
+//const cors = require('cors');
+
+const usersController = require('../controllers/userController');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  console.log('Get Request');
-  res.json({ message: 'it work' });
-});
+const app = express();
 
-// router.post('/register', async (req, res) => {
-//   const { name, email, password } = req.body;
+router.get('/', usersController.getUsers);
+router.post('/register', usersController.register);
+router.post('/login', usersController.login);
 
-//   try {
-//     const user = await User.create({ name, email, password });
+module.exports = router;
 
-//     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-
-//     res.json({ success: true, token });
-//     res.send({ status: 'ok' });
-//   } catch (error) {
-//     res.send({ status: 'error' });
-//     console.error(error);
-//     res.status(500).json({ success: false, message: 'Server Error' });
-//   }
+// router.get('/', (req, res, next) => {
+//   res.json({ message: 'it work' });
 // });
-
-// router.post('/login', async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email });
-
-//     if (!user) {
-//       return res
-//         .status(401)
-//         .json({ success: false, message: 'Invalid credentials' });
-//     }
-
-//     const isMatch = await user.matchPassword(password);
-
-//     if (!isMatch) {
-//       return res
-//         .status(401)
-//         .json({ success: false, message: 'Invalid credentials' });
-//     }
-
-//     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-
-//     res.json({ success: true, token });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, message: 'Server error' });
-//   }
-// });
-
-export default router;

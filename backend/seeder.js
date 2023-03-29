@@ -1,12 +1,28 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 import users from './data/users.js';
 import User from './models/userModel.js';
-import connectDB from './config/db.js';
+//import connectDB from './config/db.js';
 
 dotenv.config();
 
-connectDB();
+//connectDB();
+
+const PORT = process.env.PORT || 5000;
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(
+      PORT,
+      console.log(
+        `server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+      )
+    );
+    console.log(`MongoDB Connected`);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const importData = async () => {
   try {

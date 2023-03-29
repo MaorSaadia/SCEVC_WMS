@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = mongoose.Schema(
   {
@@ -17,7 +18,7 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlengh: 6,
+      //minlengh: 6,
     },
 
     isAdmin: {
@@ -30,6 +31,8 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+//userSchema.plugin(uniqueValidator);
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
@@ -44,6 +47,4 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-const User = mongoose.model('User', userSchema);
-
-export default User;
+module.exports = mongoose.model('User', userSchema);
