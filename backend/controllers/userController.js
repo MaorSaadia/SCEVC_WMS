@@ -1,5 +1,5 @@
 const HttpError = require('../httpError');
-const asyncHandler = require('express-async-handler');
+//const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 
 const USERS = [
@@ -22,11 +22,11 @@ const register = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    const error = new HttpError('Signing Failed', 500);
+    const error = new HttpError('ההרשמה נכשלה', 500);
   }
 
   if (existingUser) {
-    const error = new HttpError('User existing Already', 422);
+    const error = new HttpError('משתמש קיים כבר', 422);
     return next(error);
   }
 
@@ -40,7 +40,7 @@ const register = async (req, res, next) => {
     await createdUser.save();
   } catch (err) {
     console.log(err);
-    const error = new HttpError('Signing up failed, please try again.', 500);
+    const error = new HttpError('ההרשמה נכשלה, אנא נסה שוב.', 500);
     return next(error);
   }
 
@@ -55,18 +55,12 @@ const login = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    const error = new HttpError(
-      'Logging in failed, please try again later.',
-      500
-    );
+    const error = new HttpError('הכניסה נכשלה, אנא נסה שוב מאוחר יותר.', 500);
     return next(error);
   }
 
   if (!existingUser || existingUser.password !== password) {
-    const error = new HttpError(
-      'Invalid credentials, could not log you in.',
-      401
-    );
+    const error = new HttpError('נתונים לא נכונים, אנא נסה שנית.', 401);
     return next(error);
   }
 

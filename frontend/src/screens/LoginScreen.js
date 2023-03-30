@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Input from '../components/FormElements/Input';
@@ -7,10 +7,7 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../util/validators';
 import Card from '../components/Card';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       email: {
         value: '',
@@ -30,7 +27,7 @@ const LoginScreen = () => {
 
   return (
     <>
-      <h1></h1>
+      <h1> </h1>
       <Card>
         <hr className="hr-line-right"></hr>
         <h1>התחברות</h1>
@@ -47,13 +44,6 @@ const LoginScreen = () => {
             errorText="אנא הזן כתובת דוא'ל תקנית."
             onInput={inputHandler}
           />
-          {/* <FormControl
-              style={{ direction: 'rtl' }}
-              type="email"
-              placeholder=""
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></FormControl> */}
           <Input
             element="input"
             id="password"
@@ -63,16 +53,7 @@ const LoginScreen = () => {
             errorText="נא להזין סיסמה חוקית, לפחות 6 תווים."
             onInput={inputHandler}
           />
-          {/* <FormControl
-              style={{ direction: 'rtl' }}
-              type="password"
-              placeholder=""
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></FormControl> */}
-          <div>
-            <h2> </h2>
-          </div>
+          <h2> </h2>
           <div className="d-grid gap-3">
             <Button
               type="submit"

@@ -13,17 +13,12 @@ import Message from '../components/Message';
 import Card from '../components/Card';
 
 const RegisterScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmpassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  //const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
 
   let navigate = useNavigate();
 
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       email: {
         value: '',
@@ -39,14 +34,9 @@ const RegisterScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(name, email, password, confirmpassword);
-
-    if (password !== confirmpassword) {
-      setError('Passwords Do Not Match');
-      //setIsError(true);
-    }
 
     try {
+      setIsLoading(true);
       const response = await fetch('http://localhost:5000/api/users/register', {
         method: 'POST',
         headers: {
@@ -72,20 +62,15 @@ const RegisterScreen = () => {
     }
   };
 
-  const errorHandler = () => {
-    setError(null);
-  };
-
   return (
     <>
-      <h1></h1>
+      <h1> </h1>
       <Card>
         <hr className="hr-line-right"></hr>
         <h1>הרשמה</h1>
         <hr className="hr-line-left"></hr>
         {error && <Message variant="danger">{error}</Message>}
         {isLoading && <Loader />}
-
         <Form onSubmit={submitHandler}>
           <Input
             element="input"
@@ -96,12 +81,6 @@ const RegisterScreen = () => {
             errorText="נא להזין שם."
             onInput={inputHandler}
           />
-          {/* <FormControl
-              style={{ direction: 'rtl' }}
-              type="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></FormControl> */}
           <Input
             element="input"
             style={{ direction: 'rtl' }}
@@ -112,12 +91,6 @@ const RegisterScreen = () => {
             errorText="אנא הזן כתובת דוא'ל תקנית של המכללה."
             onInput={inputHandler}
           />
-          {/* <FormControl
-              style={{ direction: 'rtl' }}
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></FormControl> */}
           <Input
             element="input"
             id="password"
@@ -127,14 +100,6 @@ const RegisterScreen = () => {
             errorText="נא להזין סיסמה חוקית, לפחות 6 תווים."
             onInput={inputHandler}
           />
-          {/* 
-            <FormControl
-              style={{ direction: 'rtl' }}
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></FormControl> */}
-
           {/* <FormControl
               style={{ direction: 'rtl' }}
               type="password"
