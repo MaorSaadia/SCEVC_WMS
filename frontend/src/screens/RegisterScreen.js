@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -10,45 +10,53 @@ import {
   FormControl,
 } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  //const [isError, setIsError] = useState(false);
+  const [error, setError] = useState('');
+
+  let navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     //console.log(name, email, password, confirmpassword, message);
 
     if (password !== confirmpassword) {
-      setMessage('Passwords Do Not Match');
+      setError('Passwords Do Not Match');
+      //setIsError(true);
     }
 
-    // try {
-    //   const response = await fetch('/api/auth/register', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ name, email, password }),
-    //   });
+    try {
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-    //   const data = await response.json();
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      console.log(responseData);
+      setIsLoading(false);
+      navigate('/');
+    } catch (error) {
+      setIsLoading(false);
+      setError(error.message || 'Something went wrong, please try again.');
+    }
+  };
 
-    //   if (!response.ok) {
-    //     setMessage(data.message);
-    //     return;
-    //   }
-
-    //   localStorage.setItem('token', data.token);
-    //   setName('');
-    //   setEmail('');
-    //   setPassword('');
-    //   setMessage('');
-    // } catch (message) {
-    //   console.error(message);
-    //   setMessage('Server error');
-    // }
+  const errorHandler = () => {
+    setError(null);
   };
 
   return (
@@ -60,7 +68,8 @@ const RegisterScreen = () => {
         <div>
           <h1> </h1>
         </div>
-        {message && <p>{message}</p>}
+        {error && <Message variant="danger">{error}</Message>}
+        {isLoading && <Loader />}
         <Form onSubmit={submitHandler}>
           <FormGroup controlId="pname">
             <FormLabel style={{ display: 'flex', justifyContent: 'flex-end' }}>
