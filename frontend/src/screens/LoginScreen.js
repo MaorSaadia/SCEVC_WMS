@@ -41,7 +41,7 @@ const LoginScreen = () => {
             type="email"
             label="אימייל:"
             validators={[VALIDATOR_EMAIL()]}
-            errorText="אנא הזן כתובת דוא'ל תקנית."
+            errorText="אנא הזן כתובת דוא'ל מכללה תקנית."
             onInput={inputHandler}
           />
           <Input

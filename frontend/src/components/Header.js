@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { AuthContext } from '../context/AuthContext';
 
 const Header = () => {
+  const auth = useContext(AuthContext);
+
   return (
     <header>
       <Navbar
@@ -24,16 +27,30 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              {/* <LinkContainer to="/conntact">
+              <LinkContainer to="/conntact">
                 <Nav.Link>
                   צור קשר <i className="fas fa-phone"></i>
                 </Nav.Link>
-              </LinkContainer> */}
-              <LinkContainer to="/login">
-                <Nav.Link>
-                  התחברות <i className="fas fa-user"></i>
-                </Nav.Link>
               </LinkContainer>
+              {!auth.isLoggedIn && (
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    התחברות <i className="fas fa-user"></i>
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {auth.isLoggedIn && (
+                <LinkContainer to="/profile">
+                  <Nav.Link>
+                    פרופיל <i className="fas fa-address-book"></i>
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {auth.isLoggedIn && (
+                <Button style={{ fontSize: '1.2rem' }} onClick={auth.logout}>
+                  התנתק
+                </Button>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

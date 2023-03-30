@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Input from '../components/FormElements/Input';
@@ -11,8 +11,10 @@ import {
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Card from '../components/Card';
+import { AuthContext } from '../context/AuthContext';
 
 const RegisterScreen = () => {
+  const auth = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -55,6 +57,7 @@ const RegisterScreen = () => {
       }
       console.log(responseData);
       setIsLoading(false);
+      auth.login();
       navigate('/');
     } catch (error) {
       setIsLoading(false);
@@ -73,7 +76,6 @@ const RegisterScreen = () => {
         {isLoading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Input
-            element="input"
             id="name"
             type="name"
             label="שם מלא:"
@@ -88,7 +90,7 @@ const RegisterScreen = () => {
             type="email"
             label="אימייל מכללה:"
             validators={[VALIDATOR_EMAIL()]}
-            errorText="אנא הזן כתובת דוא'ל תקנית של המכללה."
+            errorText="אנא הזן כתובת דוא'ל מכללה תקנית."
             onInput={inputHandler}
           />
           <Input
