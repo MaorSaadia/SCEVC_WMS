@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Input from '../components/FormElements/Input';
@@ -12,13 +12,15 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Card from '../components/Card';
 import { AuthContext } from '../context/AuthContext';
+import { useHttpClient } from '../hooks/httpHook';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const RegisterScreen = () => {
   const auth = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { isLoading, error, sendRequest } = useHttpClient();
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const word = ['חלש', 'חלש', 'בסדר', 'טוב', 'חזק'];
 
   const [formState, inputHandler] = useForm(
     {
@@ -38,31 +40,22 @@ const RegisterScreen = () => {
     e.preventDefault();
 
     try {
-      setIsLoading(true);
-      const response = await fetch('http://localhost:5000/api/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      await sendRequest(
+        'http://localhost:5000/api/users/register',
+        'POST',
+        JSON.stringify({
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value,
         }),
-      });
+        {
+          'Content-Type': 'application/json',
+        }
+      );
 
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
-      console.log(responseData);
-      setIsLoading(false);
       auth.login();
       navigate('/');
-    } catch (error) {
-      setIsLoading(false);
-      setError(error.message || 'Something went wrong, please try again.');
-    }
+    } catch (err) {}
   };
 
   return (
@@ -102,6 +95,14 @@ const RegisterScreen = () => {
             errorText="נא להזין סיסמה חוקית, לפחות 6 תווים."
             onInput={inputHandler}
           />
+          {formState.inputs.password.value.length >= 1 && (
+            <PasswordStrengthBar
+              shortScoreWord="קצר מדי"
+              scoreWords={word}
+              password={formState.inputs.password.value}
+            />
+          )}
+
           {/* <FormControl
               style={{ direction: 'rtl' }}
               type="password"
