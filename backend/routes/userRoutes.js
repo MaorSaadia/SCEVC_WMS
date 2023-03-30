@@ -1,7 +1,6 @@
 const User = require('../models/userModel');
 const express = require('express');
 const bodyParser = require('body-parser');
-//const cors = require('cors');
 
 const usersController = require('../controllers/userController');
 
