@@ -38,6 +38,12 @@ const RegisterScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(
+      formState.inputs.name.value,
+      formState.inputs.email.value,
+      formState.inputs.password.value,
+      formState.inputs.role.value
+    );
 
     try {
       await sendRequest(
@@ -47,6 +53,7 @@ const RegisterScreen = () => {
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value,
+          role: formState.inputs.role.value,
         }),
         {
           'Content-Type': 'application/json',
@@ -69,6 +76,7 @@ const RegisterScreen = () => {
         {isLoading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Input
+            element="textarea"
             id="name"
             type="name"
             label="שם מלא:"
@@ -94,7 +102,7 @@ const RegisterScreen = () => {
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="נא להזין סיסמה חוקית, לפחות 6 תווים."
             onInput={inputHandler}
-          />
+          />{' '}
           {formState.inputs.password.value.length >= 1 && (
             <PasswordStrengthBar
               shortScoreWord="קצר מדי"
@@ -102,13 +110,47 @@ const RegisterScreen = () => {
               password={formState.inputs.password.value}
             />
           )}
-
-          {/* <FormControl
-              style={{ direction: 'rtl' }}
-              type="password"
-              value={confirmpassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            ></FormControl> */}
+          <Input
+            element="radio"
+            id="role"
+            label="בחר תפקיד:"
+            options={[
+              { label: 'מרצה', value: 'מרצה' },
+              { label: 'סטודנט', value: 'סטודנט' },
+            ]}
+            validators={[VALIDATOR_REQUIRE(6)]}
+            errorText="נא לבחור תפקיד."
+            onInput={inputHandler}
+          />
+          {/* <Form.Group as={Row} className="justify-content-center">
+            <Col xs="auto">
+              <div>
+                <Form.Check
+                  type="radio"
+                  label="מרצה"
+                  name="radio-group"
+                  id="radio-option1"
+                  value="מרצה"
+                  checked={selectedOption === 'מרצה'}
+                  onChange={handleOptionChange}
+                  inline
+                />
+                <Form.Check
+                  type="radio"
+                  label="סטודנט"
+                  name="radio-group"
+                  id="radio-option2"
+                  value="סטודנט"
+                  checked={selectedOption === 'סטודנט'}
+                  onChange={handleOptionChange}
+                  inline
+                />
+              </div>
+            </Col>
+            <Col xs="auto" className="text-right">
+              <label>:בחר תפקיד</label>
+            </Col>
+          </Form.Group> */}
           <h2> </h2>
           <div className="d-grid gap-3">
             <Button

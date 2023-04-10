@@ -50,8 +50,10 @@ const Input = (props) => {
     });
   };
 
-  const element =
-    props.element === 'input' ? (
+  let element;
+
+  if (props.element === 'input') {
+    element = (
       <input
         id={props.id}
         type={props.type}
@@ -60,7 +62,9 @@ const Input = (props) => {
         onBlur={touchHandler}
         value={inputState.value}
       />
-    ) : (
+    );
+  } else if (props.element === 'textarea') {
+    element = (
       <textarea
         id={props.id}
         rows={props.rows || 1}
@@ -69,6 +73,29 @@ const Input = (props) => {
         value={inputState.value}
       />
     );
+  } else if (props.element === 'radio') {
+    element = (
+      <div className="form-control">
+        <label className="radio-label" htmlFor={props.id}></label>
+        <div className="radio-buttons">
+          {props.options.map((option) => (
+            <label key={option.value}>
+              <input
+                type="radio"
+                id={`${props.id}-${option.value}`}
+                name={props.id}
+                value={option.value}
+                onChange={changeHandler}
+                onBlur={touchHandler}
+                checked={inputState.value === option.value}
+              />
+              {option.label}
+            </label>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

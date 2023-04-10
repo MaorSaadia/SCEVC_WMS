@@ -16,7 +16,7 @@ const getUsers = (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   let existingUser;
   try {
@@ -34,6 +34,7 @@ const register = async (req, res, next) => {
     name,
     email,
     password,
+    role,
   });
 
   try {
