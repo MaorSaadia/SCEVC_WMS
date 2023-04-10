@@ -56,7 +56,6 @@ const LoginScreen = () => {
         <h1>התחברות</h1>
         <hr className="hr-line-left"></hr>
         {error && <Message variant="danger">{error}</Message>}
-        {isLoading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Input
             element="input"
@@ -84,7 +83,7 @@ const LoginScreen = () => {
               variant="primary"
               disabled={!formState.isValid}
             >
-              התחבר
+              {isLoading ? <Loader variant="light" /> : <string>התחבר</string>}
             </Button>
           </div>
         </Form>

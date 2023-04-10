@@ -2,10 +2,6 @@ main {
   min-height: 85vh;
 }
 
-.navbar {
-  height: 10vh;
-}
-
 h1 {
   font-size: 3rem;
   padding: 1rem 0;
@@ -19,7 +15,28 @@ h2 {
 }
 
 h3 {
-  padding: 1rem 0;
+  padding: 0.3rem 0;
+}
+
+.footer {
+  background-color: #f5f5f5;
+  color: #777;
+  padding: 15px 0;
+}
+
+/* Card */
+.card {
+  margin: 0 auto;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow: hidden;
+  background: rgb(255, 255, 255);
+  width: 50%;
+}
+
+.card:hover {
+  box-shadow: 0 1px 8px #2d332f;
 }
 
 strong {
@@ -30,11 +47,6 @@ td {
   text-align: center;
   vertical-align: middle;
 }
-
-/* hr {
-  border: 10px solid SeaGreen;
-  border-radius: 5px;
-} */
 
 .hr-line-right {
   height: 25px;
@@ -69,31 +81,45 @@ td {
   font-size: large;
 }
 
-textarea {
-  resize: none;
+/* radio buttom */
+.radio-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
 }
 
-.form-control {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
+.radio-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 
-.radio-label {
-  margin-right: 1rem;
+.radio-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #eee;
+  border: 1px solid #ccc;
 }
 
-.radio-buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+.radio-container input:checked ~ .radio-indicator {
+  background-color: #81a890;
+  border-color: #81a890;
 }
 
-.radio-buttons label {
-  margin-right: 1rem;
+.radio-container .radio-label {
+  margin-left: 35px;
+  line-height: 20px;
 }
 
-.radio-buttons input[type='radio'] {
-  margin-right: 0.5rem;
+.radio-container:hover input ~ .radio-indicator {
+  background-color: #c8dacf;
 }

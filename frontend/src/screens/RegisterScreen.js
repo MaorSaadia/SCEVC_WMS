@@ -8,11 +8,11 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from '../util/validators';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
 import Card from '../components/Card';
 import { AuthContext } from '../context/AuthContext';
 import { useHttpClient } from '../hooks/httpHook';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import PasswordStrengthBar from 'react-password-strength-bar';
 
 const RegisterScreen = () => {
@@ -38,12 +38,6 @@ const RegisterScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(
-      formState.inputs.name.value,
-      formState.inputs.email.value,
-      formState.inputs.password.value,
-      formState.inputs.role.value
-    );
 
     try {
       await sendRequest(
@@ -73,7 +67,6 @@ const RegisterScreen = () => {
         <h1>הרשמה</h1>
         <hr className="hr-line-left"></hr>
         {error && <Message variant="danger">{error}</Message>}
-        {isLoading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Input
             element="textarea"
@@ -91,7 +84,19 @@ const RegisterScreen = () => {
             type="email"
             label="אימייל מכללה:"
             validators={[VALIDATOR_EMAIL()]}
-            errorText="אנא הזן כתובת דוא'ל מכללה תקנית."
+            errorText="אנא הזן כתובת דוא''ל מכללה תקנית."
+            onInput={inputHandler}
+          />
+          <Input
+            element="radio"
+            id="role"
+            label="בחר תפקיד:"
+            options={[
+              { label: 'מרצה', value: 'lecturer' },
+              { label: 'סטודנט', value: 'student' },
+            ]}
+            validators={[VALIDATOR_REQUIRE(6)]}
+            errorText="נא לבחור תפקיד."
             onInput={inputHandler}
           />
           <Input
@@ -102,7 +107,7 @@ const RegisterScreen = () => {
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="נא להזין סיסמה חוקית, לפחות 6 תווים."
             onInput={inputHandler}
-          />{' '}
+          />
           {formState.inputs.password.value.length >= 1 && (
             <PasswordStrengthBar
               shortScoreWord="קצר מדי"
@@ -110,47 +115,6 @@ const RegisterScreen = () => {
               password={formState.inputs.password.value}
             />
           )}
-          <Input
-            element="radio"
-            id="role"
-            label="בחר תפקיד:"
-            options={[
-              { label: 'מרצה', value: 'מרצה' },
-              { label: 'סטודנט', value: 'סטודנט' },
-            ]}
-            validators={[VALIDATOR_REQUIRE(6)]}
-            errorText="נא לבחור תפקיד."
-            onInput={inputHandler}
-          />
-          {/* <Form.Group as={Row} className="justify-content-center">
-            <Col xs="auto">
-              <div>
-                <Form.Check
-                  type="radio"
-                  label="מרצה"
-                  name="radio-group"
-                  id="radio-option1"
-                  value="מרצה"
-                  checked={selectedOption === 'מרצה'}
-                  onChange={handleOptionChange}
-                  inline
-                />
-                <Form.Check
-                  type="radio"
-                  label="סטודנט"
-                  name="radio-group"
-                  id="radio-option2"
-                  value="סטודנט"
-                  checked={selectedOption === 'סטודנט'}
-                  onChange={handleOptionChange}
-                  inline
-                />
-              </div>
-            </Col>
-            <Col xs="auto" className="text-right">
-              <label>:בחר תפקיד</label>
-            </Col>
-          </Form.Group> */}
           <h2> </h2>
           <div className="d-grid gap-3">
             <Button
@@ -158,7 +122,7 @@ const RegisterScreen = () => {
               variant="primary"
               disabled={!formState.isValid}
             >
-              הירשם
+              {isLoading ? <Loader variant="light" /> : <string>הירשם</string>}
             </Button>
           </div>
         </Form>
@@ -171,6 +135,7 @@ const RegisterScreen = () => {
           </Col>
         </Row>
       </Card>
+      <h1> </h1>
     </>
   );
 };

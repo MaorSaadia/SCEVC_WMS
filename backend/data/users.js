@@ -1,17 +1,11 @@
-const bcrypt = require('bcryptjs');
-
 const users = [
   {
     name: 'Admin',
     email: 'admin@ac.sce.ac.il',
-    password: bcrypt.hashSync('12345', 10),
+    role: 'Warehouse Manager',
+    password: 'admin12',
     isAdmin: true,
-  },
-  {
-    name: 'maor',
-    email: 'maor@ac.sce.ac.il',
-    password: bcrypt.hashSync('12345', 10),
   },
 ];
 
-export default users;
+exports.users = users;

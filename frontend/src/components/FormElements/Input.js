@@ -66,6 +66,7 @@ const Input = (props) => {
   } else if (props.element === 'textarea') {
     element = (
       <textarea
+        style={{ resize: 'none' }}
         id={props.id}
         rows={props.rows || 1}
         onChange={changeHandler}
@@ -76,10 +77,9 @@ const Input = (props) => {
   } else if (props.element === 'radio') {
     element = (
       <div className="form-control">
-        <label className="radio-label" htmlFor={props.id}></label>
         <div className="radio-buttons">
           {props.options.map((option) => (
-            <label key={option.value}>
+            <label key={option.value} className="radio-container">
               <input
                 type="radio"
                 id={`${props.id}-${option.value}`}
@@ -89,7 +89,8 @@ const Input = (props) => {
                 onBlur={touchHandler}
                 checked={inputState.value === option.value}
               />
-              {option.label}
+              <span className="radio-indicator"></span>
+              <span className="radio-label">{option.label}</span>
             </label>
           ))}
         </div>
