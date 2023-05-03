@@ -1,6 +1,6 @@
 const HttpError = require('../httpError');
-//const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
+const bcryptjs = require('bcryptjs');
 
 const USERS = [
   {
@@ -30,10 +30,18 @@ const register = async (req, res, next) => {
     return next(error);
   }
 
+  let hashpassword;
+  try {
+    hashpassword = await bcryptjs.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError('נסה שוב', 500);
+    return next(error);
+  }
+
   const createdUser = new User({
     name,
     email,
-    password,
+    password: hashpassword,
     role,
   });
 
@@ -60,11 +68,23 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
     const error = new HttpError('נתונים לא נכונים, אנא נסה שנית.', 401);
     return next(error);
   }
 
+  let isValidPassword = false;
+
+  try {
+    isValidPassword = await bcryptjs.compare(password, existingUser.password);
+  } catch (err) {
+    const error = new HttpError('נתונים לא נכונים, אנא נסה שנית.', 500);
+    return next(error);
+  }
+  if (!isValidPassword) {
+    const error = new HttpError('נתונים לא נכונים, אנא נסה שנית.', 401);
+    return next(error);
+  }
   res.json({ message: 'Logged in!' });
 };
 
