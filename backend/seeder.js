@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-import users from './data/users.js';
-import User from './models/userModel.js';
+const { users } = require('./data/users.js');
+const User = require('./models/userModel.js');
 //import connectDB from './config/db.js';
 
 dotenv.config();

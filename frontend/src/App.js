@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Header from './components/Header';
@@ -7,21 +7,24 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import { AuthContext } from './context/AuthContext';
+import PersonalZone from './screens/personalZone';
+import ContactScreen from './screens/ContactScreen';
+import { useAuth } from './hooks/authHook';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
+  const { token, login, logout, userId, userName, isAdmin } = useAuth();
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        isLoggedIn: !!token,
+        token: token,
+        userId: userId,
+        userName: userName,
+        isAdmin: isAdmin,
+        login: login,
+        logout: logout,
+      }}
     >
       <Router>
         <Header />
@@ -31,6 +34,8 @@ const App = () => {
               <Route path="/" element={<HomeScreen />} />
               <Route path="/login" element={<LoginScreen />} />
               <Route path="/register" element={<RegisterScreen />} />
+              <Route path="/personalZone" element={<PersonalZone />} />
+              <Route path="/contact" element={<ContactScreen />} />
             </Routes>
           </Container>
         </main>

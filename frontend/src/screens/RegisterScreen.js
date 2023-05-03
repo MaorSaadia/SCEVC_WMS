@@ -40,7 +40,7 @@ const RegisterScreen = () => {
     e.preventDefault();
 
     try {
-      await sendRequest(
+      const responseData = await sendRequest(
         'http://localhost:5000/api/users/register',
         'POST',
         JSON.stringify({
@@ -53,8 +53,12 @@ const RegisterScreen = () => {
           'Content-Type': 'application/json',
         }
       );
-
-      auth.login();
+      auth.login(
+        responseData.userId,
+        responseData.token,
+        responseData.name,
+        responseData.isAdmin
+      );
       navigate('/');
     } catch (err) {}
   };

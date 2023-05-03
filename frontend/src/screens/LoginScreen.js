@@ -33,7 +33,7 @@ const LoginScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await sendRequest(
+      const responseData = await sendRequest(
         'http://localhost:5000/api/users/login',
         'POST',
         JSON.stringify({
@@ -44,7 +44,13 @@ const LoginScreen = () => {
           'Content-Type': 'application/json',
         }
       );
-      auth.login();
+      auth.login(
+        responseData.userId,
+        responseData.token,
+        responseData.name,
+        responseData.isAdmin
+      );
+      console.log(responseData.isAdmin);
       navigate('/');
     } catch (err) {}
   };
@@ -97,6 +103,7 @@ const LoginScreen = () => {
           </Col>
         </Row>
       </Card>
+      <h2> </h2>
     </>
   );
 };

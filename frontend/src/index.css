@@ -123,3 +123,13 @@ td {
 .radio-container:hover input ~ .radio-indicator {
   background-color: #c8dacf;
 }
+
+div.dropdown-menu.show {
+  background-color: #eee;
+  text-align: right;
+  min-width: 100px;
+}
+a.dropdown-item:hover {
+  color: #ffffff;
+  background-color: #c8dacf;
+}
