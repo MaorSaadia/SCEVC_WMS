@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
+const cameraR = require('./routes/cameraR');
 
 dotenv.config();
 
@@ -23,17 +24,20 @@ app.use((error, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     app.listen(
       PORT,
       console.log(
-        `server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+        `\nServer Running In ${process.env.NODE_ENV} Mode On Port ${PORT}`
       )
     );
-    console.log(`MongoDB Connected`);
+    console.log(`MongoDB Connected\n`);
   })
   .catch((err) => {
     console.log(err);
   });
+
+app.use('/camera', cameraR);

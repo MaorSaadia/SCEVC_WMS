@@ -33,6 +33,12 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
 
+              <LinkContainer to="/ProductsScreen">
+                <Nav.Link>
+                  מחסן <i className="fas fa-warehouse"></i>
+                </Nav.Link>
+              </LinkContainer>
+
               {auth.isLoggedIn && auth.isAdmin && (
                 <NavDropdown title="נהל">
                   <LinkContainer to="/admin/profile">
@@ -41,19 +47,15 @@ const Header = () => {
                   <LinkContainer to="/admin/userslist">
                     <NavDropdown.Item>משתמשים</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to="/admin/productslist">
-                    <NavDropdown.Item>ציוד</NavDropdown.Item>
-                  </LinkContainer>
                   <NavDropdown.Item onClick={auth.logout}>
                     התנתק
                   </NavDropdown.Item>
                 </NavDropdown>
               )}
-
               {auth.isLoggedIn && !auth.isAdmin && (
                 <NavDropdown title={auth.userName.split(' ')[0]} id="username">
-                  <LinkContainer to="/personalZone">
-                    <NavDropdown.Item>פרופיל</NavDropdown.Item>
+                  <LinkContainer to="/PersonalZone">
+                    <NavDropdown.Item>אזור אישי</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={auth.logout}>
                     התנתק
@@ -68,14 +70,6 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              {/* {auth.isLoggedIn && (
-                <LinkContainer to="/profile">
-                  <Nav.Link>
-                    פרופיל <i className="fas fa-address-book"></i>
-                  </Nav.Link>
-                </LinkContainer>
-              )} */}
-              {/* {auth.isLoggedIn && <Button onClick={auth.logout}>התנתק</Button>} */}
             </Nav>
           </Navbar.Collapse>
         </Container>

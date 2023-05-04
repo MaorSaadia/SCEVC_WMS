@@ -7,7 +7,10 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import { AuthContext } from './context/AuthContext';
-import PersonalZone from './screens/personalZone';
+import PersonalZone from './screens/PersonalZone';
+import ProductsScreen from './screens/ProductsScreen';
+import CamerasScreens from './screens/CamerasScreen';
+import UserListScreen from './screens/UserListScreen';
 import ContactScreen from './screens/ContactScreen';
 import { useAuth } from './hooks/authHook';
 
@@ -36,6 +39,9 @@ const App = () => {
               <Route path="/register" element={<RegisterScreen />} />
               <Route path="/personalZone" element={<PersonalZone />} />
               <Route path="/contact" element={<ContactScreen />} />
+              <Route path="/ProductsScreen" element={<ProductsScreen />} />
+              <Route path="/CamerasScreen" element={<CamerasScreens />} />
+              <Route path="/admin/userslist" element={<UserListScreen />} />
             </Routes>
           </Container>
         </main>
